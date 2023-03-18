@@ -1,11 +1,14 @@
-const { default: mongoose } = require("mongoose");
-mongoose.set("strictQuery", true);
-const dotenv = require("dotenv")
-dotenv.config()
+const { mongoose } = require("mongoose");
+require("dotenv").config();
 
 const dbConnect = async () => {
-  await mongoose.connect(process.env.MONGODB_URL);
-  console.log("db connected");
+  const uri = process.env.MONGODB_URL;
+  try {
+    await mongoose.connect(uri);
+    console.log("database connected");
+  } catch (error) {
+    console.log("error", error.message);
+  }
 };
 
 module.exports = dbConnect;
